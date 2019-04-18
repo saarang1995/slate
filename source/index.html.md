@@ -528,9 +528,12 @@ request.post(options, function(error, response, body) {
 You must replace <code>your-api-key</code> and <code>signature</code> with your personal API key and generated signature respectively.
 </aside>
 
-# User
-
+<!-- ## User -->
 ## Get balances
+
+<!-- ### HTTP Request -->
+
+`POST /exchange/v1/users/balances`
 
 ```ruby
 
@@ -568,8 +571,8 @@ headers = {
 }
 
 response = requests.post(url, data = json_body, headers = headers)
-data = response.json();
-print(data);
+data = response.json()
+print(data)
 ```
 
 ```shell
@@ -577,8 +580,8 @@ print(data);
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
 var baseurl = "https://api.coindcx.com"
 
@@ -588,15 +591,15 @@ console.log(timeStamp);
 
 // Place your API key and secret below. You can generate it from the website.
 key = "";
-secret = ""
+secret = "";
 
 
 body = {
 	"timestamp": timeStamp
-}
+};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
 	url: baseurl + "/exchange/v1/users/balances",
@@ -624,14 +627,22 @@ request.post(options, function(error, response, body) {
   }
 ]
 ```
+### Response
 
-> Locked balance is the balance currently being used by an open order
 
-This endpoint retrieves account's balances.
+| Name           | Type   | Description           |
+|----------------|--------|-----------------------|
+| currency       | string | target currency name. |
+| balance        | number | balance.              |
+| locked_balance | number | locked balance.       |
 
-### HTTP Request
+<aside class="notice">Note:
+Locked balance is the balance currently being used by an open order.
+</aside>
+<!-- > Locked balance is the balance currently being used by an open order -->
 
-`POST /exchange/v1/users/balances`
+<!-- This endpoint retrieves account's balances. -->
+
 
 <!--######################## START user info ######################## -->
 ## Get user info
