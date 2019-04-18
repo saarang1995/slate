@@ -116,7 +116,7 @@ print(data)
 | ask            | string | Highest ask offer in the orderbook      |
 | timestamp      | string | Timestamp if the ticker                 |
 
-<aside> Note: A ticker is generated once every second</aside>
+<aside> Note: A ticker response is generated every second.</aside>
 
 ## Markets
 <!-- ### HTTP Request -->
@@ -279,7 +279,6 @@ request.get(baseurl + "/exchange/v1/trades/SNTBTC",function(error, response, bod
 
 ### Response
 
-This API provides with a sorted list of most recent 50 trades.
 
 | Name | Type    | Description                               |
 |------|---------|-------------------------------------------|
@@ -288,14 +287,15 @@ This API provides with a sorted list of most recent 50 trades.
 | T    | number  | timestamp of trade                        |
 | m    | boolean | whether the buyer is market maker or not. |
 
+<aside> Note: Response is a sorted list of most recent 50 trades.</aside>
 
 
 
 ## Order book
-### HTTP request
+<!-- ### HTTP request -->
 `GET /exchange/v1/books/:market`
 
-### Path parameters
+### Parameters
 | Name   | Required | Example |
 |--------|----------|---------|
 | market | Yes      | SNTBTC  |
@@ -346,16 +346,42 @@ print(data)
   }
 ```
 
-<aside class="warning">This end point returns unsorted objects of bids and asks. They must be sorted locally at your end</aside>
+### Response
 
 
+| Name | Type   | Description            |
+|------|--------|------------------------|
+| asks | object | key-value pair of asks |
+| bids | object | key-value pair of bids |
+
+<aside class="warning">Warning: This end point returns unsorted objects of bids and asks. They must be sorted at your end</aside>
 
 ### 
 
 
-# Authentication
+# REST API - Private
 
 <aside class="warning">All the Authenticated API calls use POST method. Parameters are to be passed as JSON in the request body. Every request must contain a timstamp parameter of when the request was generated.</aside>
+
+The authentication procedure is as follows:
+<ul>
+  <li>The payload is the parameters object, JSON encoded</li>
+`payload = parameters-object -> JSON encode`
+  <br><br>
+  <li>The signature is the hex digest of an HMAC-SHA256 hash where the message is your payload, and the secret key is your API secret.</li>
+`signature = HMAC-SHA256(payload, api-secret).digest('hex')`
+</ul>
+<br>
+ <p>After this, You will have to add following headers into all the authenticated requests</p>
+
+| Header Name      | Value        |
+|------------------|--------------|
+| X-AUTH-APIKEY    | your-api-key |
+| X-AUTH-SIGNATURE | signature    |
+
+<aside class="notice">
+You must replace <code>your-api-key</code> and <code>signature</code> with your personal API key and generated signature respectively.
+</aside>
 
 > To authorize, use this code:
 
@@ -489,26 +515,6 @@ secret = "";
 ```
 
 > Make sure to replace API key and API secret with your own.
-
-The authentication procedure is as follows:
-<ul>
-  <li>The payload is the parameters object, JSON encoded</li>
-`payload = parameters-object -> JSON encode`
-  <br><br>
-  <li>The signature is the hex digest of an HMAC-SHA256 hash where the message is your payload, and the secret key is your API secret.</li>
-`signature = HMAC-SHA256(payload, api-secret).digest('hex')`
-</ul>
-<br>
- <p>After this, You will have to add following headers into all the authenticated requests</p>
-
-| Header Name      | Value        |
-|------------------|--------------|
-| X-AUTH-APIKEY    | your-api-key |
-| X-AUTH-SIGNATURE | signature    |
-
-<aside class="notice">
-You must replace <code>your-api-key</code> and <code>signature</code> with your personal API key and generated signature respectively.
-</aside>
 
 # User
 
