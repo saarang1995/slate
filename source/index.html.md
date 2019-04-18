@@ -45,6 +45,15 @@ Connecting to private channels requires to provide KEY and SECRET which you can 
 <li>
 All time and timestamp related fields are in milliseconds.
 </li>
+<li>
+Type of Orders 
+<ol>
+<li>"take_profit"</li>
+<li>"stop_limit"</li>
+<li>"market_order"</li>
+<li>"limit_order"</li>
+</ol>
+</li>
 </ul>
 
 
@@ -149,7 +158,7 @@ Returns an array of strings of currently active markets.
 
 
 ## Markets details
-### HTTP Request
+<!-- ### HTTP Request -->
 
 `GET /exchange/v1/markets_details`
 
@@ -200,22 +209,34 @@ print(data)
 ]
 ```
 
-### Definitions
+### Response
 
-<ul>
-  <li>min_quantity - It is the minimum quantity of target currency (SNT) for which an order may be placed</li>
-  <li>max_quantity - It is the maximum quantity of target currency (SNT) for which an order may be placed</li>
-  <li>min_notional - It is the minimum amount of base currency (BTC) for which an order may be placed</li>
-  <li>base_currency_precision - Number of decimals accepted for the base currency</li>
-  <li>target_currency_precision - Number of decimals accepted for the target currency</li>
-  <li>step - It is the minimum increment accepted for the target currency</li>
-  <li>ecode - (Exchange code) It is the unique identifier for exchanges available on CoinDCX. For example: B(Binance), HB(HITBTC)  </li>
-  <li>pair - It is a string created by (ecode, target_currency_short_name, base_currency_short_name). It can be used to connect to DcxStreams socket for API trading.</li>
-</ul>
 
+| Name                       | Type   | Description                                                                |
+|----------------------------|--------|----------------------------------------------------------------------------|
+| coindcx_name               | string | Currency pair name.                                                        |
+| base_currency_short_name   | string | Base currency's short name.                                                |
+| target_currency_short_name | string | Target currency's short name.                                              |
+| target_currency_name       | string | Target currency's full name.                                               |
+| base_currency_name         | string | Base currency's full name.                                                 |
+| min_quantity               | number | Minimum quantity.                                                          |
+| max_quantity               | number | Maximum quantity.                                                          |
+| min_price                  | number | Minimum price.                                                             |
+| max_price                  | number | Maximum price.                                                             |
+| min_notional               | number | Minimum notional price.                                                    |
+| base_currency_precision    | number | Decimal precision for the base currency.                                   |
+| target_currency_precision  | number | Decimal precision for the target currency.                                 |
+| step                       | number | step count.                                                                |
+| order_types                | array  | Array of all the allowed order type.                                       |
+| symbol                     | string | Currency pair name.                                                        |
+| ecode                      | string | Exchange code from where the currency pair' data exists(ex: B for Binance) |
+| max_leverage               | number | Maximum laverage allowed on the currency pair.                             |
+| max_leverage_short         | number | Maximum laverage short allowed on the currency pair.                       |
+| pair                       | string | Pair name of currency pair for connecting to Websocket API.                |
+| status                     | string | Current status of Currency pair Wallet.                                    |
 
 ## Trades
-### HTTP request
+<!-- ### HTTP request -->
 `GET /exchange/v1/trades/:market`
 
 ```python
@@ -248,22 +269,26 @@ request.get(baseurl + "/exchange/v1/trades/SNTBTC",function(error, response, bod
     "T":  1521476030955.09,
     "m":  false
   }
-}
+]
 ```
 
-### Path parameters
+### Parameters
 | Name   | Required | Example |
 |--------|----------|---------|
 | market | Yes      | SNTBTC  |
 
+### Response
+
 This API provides with a sorted list of most recent 50 trades.
-### Definitions
-<ul>
-  <li>m stands for whether the buyer is market maker or not.</li>
-  <li>p is the trade price</li>
-  <li>q is the quantity</li>
-  <li>T is the timestamp of trade</li>
-</ul>
+
+| Name | Type    | Description                               |
+|------|---------|-------------------------------------------|
+| p    | number  | trade price                               |
+| q    | number  | quantity                                  |
+| T    | number  | timestamp of trade                        |
+| m    | boolean | whether the buyer is market maker or not. |
+
+
 
 
 ## Order book
