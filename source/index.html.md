@@ -156,6 +156,9 @@ print(data)
 ### Response
 Returns an array of strings of currently active markets.
 
+| Name | Type  | Description                       |
+|------|-------|-----------------------------------|
+| --   | array | array of currently active markets |
 
 ## Markets details
 <!-- ### HTTP Request -->
@@ -530,13 +533,9 @@ You must replace <code>your-api-key</code> and <code>signature</code> with your 
 
 <!-- ## User -->
 ## Get balances
-
-<!-- ### HTTP Request -->
-
 `POST /exchange/v1/users/balances`
 
 ```ruby
-
 ```
 
 ```python
@@ -576,14 +575,13 @@ print(data)
 ```
 
 ```shell
-
 ```
 
 ```javascript
 const request = require('request');
 const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
@@ -629,16 +627,13 @@ request.post(options, function(error, response, body) {
 ```
 ### Response
 
-
 | Name           | Type   | Description           |
 |----------------|--------|-----------------------|
 | currency       | string | target currency name. |
 | balance        | number | balance.              |
 | locked_balance | number | locked balance.       |
 
-<aside class="notice">Note:
-Locked balance is the balance currently being used by an open order.
-</aside>
+<aside class="notice">Note: Locked balance is the balance currently being used by an open order. </aside>
 <!-- > Locked balance is the balance currently being used by an open order -->
 
 <!-- This endpoint retrieves account's balances. -->
@@ -646,6 +641,8 @@ Locked balance is the balance currently being used by an open order.
 
 <!--######################## START user info ######################## -->
 ## Get user info
+
+`POST /exchange/v1/users/info`
 
 ```ruby
 
@@ -683,35 +680,33 @@ headers = {
 }
 
 response = requests.post(url, data = json_body, headers = headers)
-data = response.json();
-print(data);
+data = response.json()
+print(data)
 ```
 
 ```shell
-
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
 console.log(timeStamp);
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
-secret = ""
-
+secret = "";
 
 body = {
   "timestamp": timeStamp
-}
+};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
   url: baseurl + "/exchange/v1/users/info",
@@ -721,11 +716,11 @@ const options = {
   },
   json: true,
   body: body
-}
+};
 
 request.post(options, function(error, response, body) {
   console.log(body);
-})
+});
 ```
 
 > Response:
@@ -741,18 +736,26 @@ request.post(options, function(error, response, body) {
   }
 ]
 ```
-> coindcx_id is the user id
 
-This endpoint retrieves user info.
+### Response
 
-### HTTP Request
+| Name          | Type   | Description                       |
+|---------------|--------|-----------------------------------|
+| coindcx_id    | string | User's Coindcx unique identifier. |
+| first_name    | string | User's first name.                |
+| last_name     | string | User's last name.                 |
+| mobile_number | string | User's mobile number.             |
+| email         | string | User's email id.                  |
 
-`POST /exchange/v1/users/info`
+<aside class="notice">Note: coindcx_id is the user id. </aside>
+<!-- > coindcx_id is the user id -->
+
+
 
 <!--######################## END user info ######################## -->
 
 
-# Order
+## Order
 Enum definitions for the purpose of order are as follows:
 
 | Name       | Values                    |
@@ -763,6 +766,10 @@ Enum definitions for the purpose of order are as follows:
 | ecode      | I, B, HB                  |
 
 ## New order
+
+Endpoint to place a new order on the exchange
+
+`POST /exchange/v1/orders/create`
 
 ```ruby
 
@@ -814,14 +821,14 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
 secret = "";
 
@@ -833,10 +840,10 @@ body = {
 	"price_per_unit": "0.03244", //This parameter is only required for a 'limit_order'
 	"total_quantity": 400, //Replace this with the quantity you want
 	"timestamp": timeStamp
-}
+};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
 	url: baseurl + "/exchange/v1/orders/create",
@@ -846,11 +853,11 @@ const options = {
 	},
 	json: true,
 	body: body
-}
+};
 
 request.post(options, function(error, response, body) {
 	console.log(body);
-})
+});
 
 ```
 
@@ -879,11 +886,6 @@ request.post(options, function(error, response, body) {
 ```
 
 
-Use this endpoint to place a new order on the exchange
-
-### HTTP Request
-
-`POST /exchange/v1/orders/create`
 
 ### Parameters
 
@@ -895,6 +897,26 @@ Use this endpoint to place a new order on the exchange
 | side           | Yes      | buy          | Specify buy or sell                            |
 | order_type     | Yes      | market_order | Order Type                                     |
 | timestamp      | Yes      | 1524211224   | When was the request generated                 |
+
+
+### Response
+
+
+| Name               | Type   | Description                       |
+|--------------------|--------|-----------------------------------|
+| id                 | string | User's Coindcx unique identifier. |
+| market             | string | currency pair name.               |
+| order_type         | string | Order type to place.              |
+| side               | string | Buy or Sell.                      |
+| status             | string | Status of order.                  |
+| fee_amount         | number | Fee charged on the order.         |
+| fee                | number | Fee percentage.                   |
+| total_quantity     | number | Total Quantity of order.          |
+| remaining_quantity | number | Remaining quantity.               |
+| avg_price          | number | Average price.                    |
+| price_per_unit     | number | Price per unit of.                |
+| created_at         | string | Time when the order was created.  |
+| updated_at         | string | Time when the order was updated.  |
 
 ## Create multiple orders
 
