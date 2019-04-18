@@ -919,10 +919,9 @@ request.post(options, function(error, response, body) {
 | updated_at         | string | Time when the order was updated.  |
 
 ## Create multiple orders
+Endpoint to place a multiple orders on the exchange
 
-<aside class="notice">
-Multiple ordering API is only supported for CoinDCX markets. Set ecode parameter as <code>I</code> 
-</aside>
+`POST /exchange/v1/orders/create_multiple`
 
 ```ruby
 
@@ -985,14 +984,14 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
 secret = "";
 
@@ -1015,10 +1014,10 @@ body = {"orders": [{
           "timestamp": timeStamp,
           "ecode": "I"
         }
-      ]}
+      ]};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
   url: baseurl + "/exchange/v1/orders/create_multiple",
@@ -1028,11 +1027,11 @@ const options = {
   },
   json: true,
   body: body
-}
+};
 
 request.post(options, function(error, response, body) {
   console.log(body);
-})
+});
 
 ```
 
@@ -1061,13 +1060,7 @@ request.post(options, function(error, response, body) {
 ```
 
 
-Use this endpoint to place a multiple orders on the exchange
-
-### HTTP Request
-
-`POST /exchange/v1/orders/create_multiple`
-
-### Parameters in an array of objects
+### Parameters (array of objects)
 
 | Name           | Required | Example      | Description                                    |
 |----------------|----------|--------------|------------------------------------------------|
@@ -1079,7 +1072,37 @@ Use this endpoint to place a multiple orders on the exchange
 | timestamp      | Yes      | 1524211224   | When was the request generated                 |
 | ecode          | Yes      | I            | Exchange code                                  |
 
+
+### Response
+
+
+| Name               | Type   | Description                       |
+|--------------------|--------|-----------------------------------|
+| id                 | string | User's Coindcx unique identifier. |
+| market             | string | currency pair name.               |
+| order_type         | string | Order type to place.              |
+| side               | string | Buy or Sell.                      |
+| status             | string | Status of order.                  |
+| fee_amount         | number | Fee charged on the order.         |
+| fee                | number | Fee percentage.                   |
+| total_quantity     | number | Total Quantity of order.          |
+| remaining_quantity | number | Remaining quantity.               |
+| avg_price          | number | Average price.                    |
+| price_per_unit     | number | Price per unit of.                |
+| created_at         | string | Time when the order was created.  |
+| updated_at         | string | Time when the order was updated.  |
+
+
+<aside class="notice">Note: Multiple ordering API is only supported for CoinDCX markets. Set ecode parameter as <code>I</code> 
+</aside>
+
+
 ##  Order status
+
+Endpoint to fetch status of any order
+
+`POST /exchange/v1/orders/status`
+
 ```ruby
 
 ```
@@ -1126,8 +1149,8 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
 var baseurl = "https://api.coindcx.com"
 
@@ -1135,7 +1158,7 @@ var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
 console.log(timeStamp);
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
 secret = "";
 
@@ -1143,10 +1166,10 @@ secret = "";
 body = {
 	"id": "qwd19992-43fd-14e8-b027-bb815bnb14ed", //Replace it with your Order ID.
 	"timestamp": timeStamp
-}
+};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
 	url: baseurl + "/exchange/v1/orders/status",
@@ -1156,7 +1179,7 @@ const options = {
 	},
 	json: true,
 	body: body
-}
+};
 
 request.post(options, function(error, response, body) {
 	console.log(body);
@@ -1184,12 +1207,6 @@ request.post(options, function(error, response, body) {
 ```
 
 
-Use this endpoint to fetch status of any order
-
-### HTTP Request
-
-`POST /exchange/v1/orders/status`
-
 ### Parameters
 
 | Name      | Required | Example                              | Description                    |
@@ -1198,7 +1215,38 @@ Use this endpoint to fetch status of any order
 | timestamp | Yes      | 1524211224                           | When was the request generated |
 
 
+
+### Response
+
+
+| Name               | Type   | Description                       |
+|--------------------|--------|-----------------------------------|
+| id                 | string | User's Coindcx unique identifier. |
+| market             | string | currency pair name.               |
+| order_type         | string | Order type to place.              |
+| side               | string | Buy or Sell.                      |
+| status             | string | Status of order.                  |
+| fee_amount         | number | Fee charged on the order.         |
+| fee                | number | Fee percentage.                   |
+| total_quantity     | number | Total Quantity of order.          |
+| remaining_quantity | number | Remaining quantity.               |
+| avg_price          | number | Average price.                    |
+| price_per_unit     | number | Price per unit of.                |
+| created_at         | string | Time when the order was created.  |
+| updated_at         | string | Time when the order was updated.  |
+
+
+
+
 ##  Multiple order status
+
+
+Endpoint to fetch status of any order
+
+<!-- ### HTTP Request -->
+
+`POST /exchange/v1/orders/status_multiple`
+
 ```ruby
 
 ```
@@ -1244,26 +1292,26 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
 console.log(timeStamp);
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
 secret = "";
 
 
 body = {
   "ids": ["8a2f4284-c895-11e8-9e00-5b2c002a6ff4", "8a1d1e4c-c895-11e8-9dff-df1480546936"]
-}
+};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
   url: baseurl + "/exchange/v1/orders/status_multiple",
@@ -1273,11 +1321,11 @@ const options = {
   },
   json: true,
   body: body
-}
+};
 
 request.post(options, function(error, response, body) {
   console.log(body);
-})
+});
 ```
 
 > Response:
@@ -1303,12 +1351,6 @@ request.post(options, function(error, response, body) {
 ```
 
 
-Use this endpoint to fetch status of any order
-
-### HTTP Request
-
-`POST /exchange/v1/orders/status_multiple`
-
 ### Parameters
 
 | Name | Required | Example        | Description        |
@@ -1316,8 +1358,33 @@ Use this endpoint to fetch status of any order
 | ids  | Yes      | ["id1", "id3"] | Array of order IDs |
 
 
+### Response
+
+| Name               | Type   | Description                       |
+|--------------------|--------|-----------------------------------|
+| id                 | string | User's Coindcx unique identifier. |
+| market             | string | currency pair name.               |
+| order_type         | string | Order type to place.              |
+| side               | string | Buy or Sell.                      |
+| status             | string | Status of order.                  |
+| fee_amount         | number | Fee charged on the order.         |
+| fee                | number | Fee percentage.                   |
+| total_quantity     | number | Total Quantity of order.          |
+| remaining_quantity | number | Remaining quantity.               |
+| avg_price          | number | Average price.                    |
+| price_per_unit     | number | Price per unit of.                |
+| created_at         | string | Time when the order was created.  |
+| updated_at         | string | Time when the order was updated.  |
+
 
 ##  Active orders
+Use this endpoint to fetch active orders
+
+<!-- ### HTTP Request -->
+
+`POST /exchange/v1/orders/active_orders`
+
+
 ```ruby
 
 ```
@@ -1365,16 +1432,16 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
 console.log(timeStamp);
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
 secret = "";
 
@@ -1383,10 +1450,10 @@ body = {
 	"side": "buy", //Toggle between 'buy' or 'sell'.
 	"market": "SNTBTC", //Replace 'SNTBTC' with your desired market pair.
 	"timestamp": timeStamp
-}
+};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
 	url: baseurl + "/exchange/v1/orders/active_orders",
@@ -1396,11 +1463,11 @@ const options = {
 	},
 	json: true,
 	body: body
-}
+};
 
 request.post(options, function(error, response, body) {
 	console.log(body);
-})
+});
 ```
 
 > Response:
@@ -1426,21 +1493,41 @@ request.post(options, function(error, response, body) {
 ```
 
 
-Use this endpoint to fetch active orders
-
-### HTTP Request
-
-`POST /exchange/v1/orders/active_orders`
-
 ### Parameters
 
-| Name      | Required | Example    | Description                    |
-|-----------|----------|------------|--------------------------------|
-| market    | Yes      | SNTBTC     |                                |
-| side      | No       | buy        |                                |
-| timestamp | Yes      | 1524211224 | When was the request generated |
+| Name      | Required | Example    | Description                     |
+|-----------|----------|------------|---------------------------------|
+| market    | Yes      | SNTBTC     | coindcx market name.            |
+| side      | No       | buy        | side buy or sell.               |
+| timestamp | Yes      | 1524211224 | When was the request generated. |
+
+
+### Response
+
+| Name               | Type   | Description                       |
+|--------------------|--------|-----------------------------------|
+| id                 | string | User's Coindcx unique identifier. |
+| market             | string | currency pair name.               |
+| order_type         | string | Order type to place.              |
+| side               | string | Buy or Sell.                      |
+| status             | string | Status of order.                  |
+| fee_amount         | number | Fee charged on the order.         |
+| fee                | number | Fee percentage.                   |
+| total_quantity     | number | Total Quantity of order.          |
+| remaining_quantity | number | Remaining quantity.               |
+| avg_price          | number | Average price.                    |
+| price_per_unit     | number | Price per unit of.                |
+| created_at         | string | Time when the order was created.  |
+| updated_at         | string | Time when the order was updated.  |
+
 
 ## Account Trade history
+Endpoint to fetch trades associated with your account
+
+<!-- ### HTTP Request -->
+
+`POST /exchange/v1/orders/trade_history`
+
 ```ruby
 
 ```
@@ -1483,16 +1570,16 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
 console.log(timeStamp);
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
 secret = "";
 
@@ -1500,10 +1587,10 @@ secret = "";
 body = {
   "from_id": 352622,
   "limit": 50
-}
+};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
   url: baseurl + "/exchange/v1/orders/trade_history",
@@ -1513,11 +1600,11 @@ const options = {
   },
   json: true,
   body: body
-}
+};
 
 request.post(options, function(error, response, body) {
   console.log(body);
-})
+});
 ```
 
 > Response
@@ -1536,11 +1623,7 @@ request.post(options, function(error, response, body) {
   }
 ]
 ```
-Use this endpoint to fetch trades associated with your account
 
-### HTTP Request
-
-`POST /exchange/v1/orders/trade_history`
 
 ### Parameters
 
@@ -1548,6 +1631,24 @@ Use this endpoint to fetch trades associated with your account
 |---------|----------|---------|---------------------------------------------------------------------------------------|
 | limit   | No       | 100     | Default 500                                                                           |
 | from_id | No       | 28473   | Trade ID after which you want the data. If not supplied, latest trades would be given |
+
+
+
+### Response
+
+
+| Name       | Type   | Description                                  |
+|------------|--------|----------------------------------------------|
+| id         | string | id.                                          |
+| order_id   | string | Order id of trade.                           |
+| side       | string | Buy or Sell.                                 |
+| fee_amount | string | Fee charged on the order.                    |
+| ecode      | string | Exchange of code.                            |
+| quantity   | number | Total Quantity of order.                     |
+| price      | number | Price of currency.                           |
+| symbol     | string | Symbol of current paige.                     |
+| timestamp  | number | Timestamp at which the last trade was completed |
+
 
 
 
