@@ -148,8 +148,8 @@ print(data)
   "SNTBTC",
   "TRXBTC",
   "TRXETH"
-  .
-  .
+  ,
+  ,
 ]
 ```
 
@@ -753,7 +753,6 @@ request.post(options, function(error, response, body) {
 
 
 <!--######################## END user info ######################## -->
-
 
 ## Order
 Enum definitions for the purpose of order are as follows:
@@ -1637,22 +1636,29 @@ request.post(options, function(error, response, body) {
 ### Response
 
 
-| Name       | Type   | Description                                  |
-|------------|--------|----------------------------------------------|
-| id         | string | id.                                          |
-| order_id   | string | Order id of trade.                           |
-| side       | string | Buy or Sell.                                 |
-| fee_amount | string | Fee charged on the order.                    |
-| ecode      | string | Exchange of code.                            |
-| quantity   | number | Total Quantity of order.                     |
-| price      | number | Price of currency.                           |
-| symbol     | string | Symbol of current paige.                     |
+| Name       | Type   | Description                                     |
+|------------|--------|-------------------------------------------------|
+| id         | string | id.                                             |
+| order_id   | string | Order id of trade.                              |
+| side       | string | Buy or Sell.                                    |
+| fee_amount | string | Fee charged on the order.                       |
+| ecode      | string | Exchange of code.                               |
+| quantity   | number | Total Quantity of order.                        |
+| price      | number | Price of currency.                              |
+| symbol     | string | Symbol of current paige.                        |
 | timestamp  | number | Timestamp at which the last trade was completed |
 
 
 
 
 ##  Active orders count
+
+Endpoint to fetch active orders count
+
+<!-- ### HTTP Request -->
+
+`POST /exchange/v1/orders/active_orders_count`
+
 ```ruby
 
 ```
@@ -1700,16 +1706,16 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
 console.log(timeStamp);
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
 secret = "";
 
@@ -1718,10 +1724,10 @@ body = {
 	"side": "buy", //Toggle between 'buy' or 'sell'.
 	"market": "SNTBTC", //Replace 'SNTBTC' with your desired market pair.
 	"timestamp": timeStamp
-}
+};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
 	url: baseurl + "/exchange/v1/orders/active_orders_count",
@@ -1731,25 +1737,18 @@ const options = {
 	},
 	json: true,
 	body: body
-}
+};
 
 request.post(options, function(error, response, body) {
 	console.log(body);
-})
+});
 ```
 
 > Response:
 
 ```json 
- { count: 1, status: 200 }
+ { "count": 1, "status": 200 }
 ```
-
-
-Use this endpoint to fetch active orders count
-
-### HTTP Request
-
-`POST /exchange/v1/orders/active_orders_count`
 
 ### Parameters
 
@@ -1759,8 +1758,20 @@ Use this endpoint to fetch active orders count
 | side      | No       | buy        |                                |
 | timestamp | Yes      | 1524211224 | When was the request generated |
 
+### Response
+
+| Name   | Type   | Description          |
+|--------|--------|----------------------|
+| count  | number | Active order counts. |
+| status | number | Active status.       |
 
 ##  Cancel all
+Endpoint to cancel multiple active orders.
+
+<!-- ### HTTP Request -->
+
+`POST /exchange/v1/orders/cancel_all`
+
 ```ruby
 
 ```
@@ -1808,16 +1819,16 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
 console.log(timeStamp);
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
 secret = "";
 
@@ -1826,10 +1837,10 @@ secret = "";
 		"side": "buy", //Toggle between 'buy' or 'sell'. Not compulsory
 		"market": "SNTBTC", //Replace 'SNTBTC' with your desired market pair.
 		"timestamp": timeStamp
-	}
+	};
 
 	const payload = new Buffer(JSON.stringify(body)).toString();
-	const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+	const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 	const options = {
 		url: baseurl + "/exchange/v1/orders/cancel_all",
@@ -1839,11 +1850,11 @@ secret = "";
 		},
 		json: true,
 		body: body
-	}
+	};
 
 	request.post(options, function(error, response, body) {
 		console.log(body);
-	})
+	});
 ```
 
 > Response:
@@ -1851,13 +1862,6 @@ secret = "";
 ```json 
 
 ```
-
-
-Use this endpoint to cancel multiple active orders in a single API call
-
-### HTTP Request
-
-`POST /exchange/v1/orders/cancel_all`
 
 ### Parameters
 
@@ -1867,17 +1871,28 @@ Use this endpoint to cancel multiple active orders in a single API call
 | side      | No       | buy        |                                |
 | timestamp | Yes      | 1524211224 | When was the request generated |
 
-Sending side param is optional. You may cancel all the sell orders of SNTBTC by sending
-<br>
-<code>{market: "SNTBTC", side  : "sell"}</code>
-
-
-Or you may cancel all your orders in SNTBTC market by sending
-<br>
-<code>{market: "SNTBTC"}</code>
+<ul>
+  <li>
+  Sending side param is optional. You may cancel all the sell orders of SNTBTC by sending
+  <br>
+  <code>{market: "SNTBTC", side  : "sell"}</code>
+  </li>
+  <li>
+  Or you may cancel all your orders in SNTBTC market by sending
+  <br>
+  <code>{market: "SNTBTC"}</code>
+  </li>
+</ul>
 
 
 ##  Cancel  multiple By Ids
+
+Endpoint to cancel multiple active orders in a single API call
+
+<!-- ### HTTP Request -->
+
+`POST /exchange/v1/orders/cancel_by_ids`
+
 ```ruby
 
 ```
@@ -1923,26 +1938,26 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
 console.log(timeStamp);
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
 key = "";
 secret = "";
 
 
   body = {
     ids: ["8a2f4284-c895-11e8-9e00-5b2c002a6ff4", "8a1d1e4c-c895-11e8-9dff-df1480546936"]
-  }
+  };
 
   const payload = new Buffer(JSON.stringify(body)).toString();
-  const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+  const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
   const options = {
     url: baseurl + "/exchange/v1/orders/cancel_by_ids",
@@ -1952,25 +1967,18 @@ secret = "";
     },
     json: true,
     body: body
-  }
+  };
 
   request.post(options, function(error, response, body) {
     console.log(body);
-  })
+  });
 ```
 
-> Response:
+<!-- > Response:
 
 ```json 
 
-```
-
-
-Use this endpoint to cancel multiple active orders in a single API call
-
-### HTTP Request
-
-`POST /exchange/v1/orders/cancel_by_ids`
+``` -->
 
 ### Parameters
 
@@ -1979,8 +1987,13 @@ Use this endpoint to cancel multiple active orders in a single API call
 | ids  | Yes      | ["id1", "id3"] | Array of order IDs |
 
 
-
 ##  Cancel
+Endpoint to cancel an active orders
+
+<!-- ### HTTP Request -->
+
+`POST /exchange/v1/orders/cancel`
+
 ```ruby
 
 ```
@@ -2027,16 +2040,16 @@ print(data)
 ```
 
 ```javascript
-const request = require('request')
-const crypto = require('crypto')
+const request = require('request');
+const crypto = require('crypto');
 
-var baseurl = "https://api.coindcx.com"
+var baseurl = "https://api.coindcx.com";
 
 var timeStamp = Math.floor(Date.now());
 // To check if the timestamp is correct
 console.log(timeStamp);
 
-// Place your API key and secret below. You can generate it from the website.
+// Enter your API Key and Secret here. If you don't have one, you can generate it from CoinDCX website.
 key = "";
 secret = "";
 
@@ -2044,10 +2057,10 @@ secret = "";
 body = {
 	"id": "ead19992-43fd-11e8-b027-bb815bcb14ed", //Replace this with your Order ID.
 	"timestamp": timeStamp
-}
+};
 
 const payload = new Buffer(JSON.stringify(body)).toString();
-const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex');
 
 const options = {
 	url: baseurl + "/exchange/v1/orders/cancel",
@@ -2057,26 +2070,19 @@ const options = {
 	},
 	json: true,
 	body: body
-}
+};
 
 request.post(options, function(error, response, body) {
 	console.log(body);
-})
+});
 
 ```
-
+<!-- 
 > Response:
 
 ```json 
 
-```
-
-
-Use this endpoint to cancel an active orders
-
-### HTTP Request
-
-`POST /exchange/v1/orders/cancel`
+``` -->
 
 ### Parameters
 
@@ -2087,22 +2093,26 @@ Use this endpoint to cancel an active orders
 
 
 
-
-
-
-
-
-
 <!-- ------------------- START Sockets ---------------------- -->
 
 # Sockets
-<aside class="notice">Sockets are currently available only for the INR market.</aside>
+<!-- <aside class="notice">Sockets are currently available only for the INR market.</aside> -->
+Use websocket as transport.
 
-## PUBLIC
+## Public
 
-<h3>To connect to public socket</h3>
+Steps to connect to a public channel:
+<ul>
+  <li>Create an instance of socket by providing <code>"wss://stream.coindcx.com"</code> as an endpoint.</li>
+  <li>Emit <code>'join'</code> event and provide <code>'channelName'</code> retrieved from market_details response <code>('pair')</code> as a key value pair to which you would like to connect to.</li>
+  <li>Emit <code>'leave'</code> event and provide <code>'channelName'</code> as a key value pair from which you would like to disconnect.</li>
+</ul>
 
-Refer to the right panel.
+### Parameters
+
+| Name        | Required | Example | Description |
+|-------------|----------|---------|-------------|
+| channelName | Yes      | BTCUSDT |             |
 
 ```python
 import socketio
@@ -2151,18 +2161,21 @@ socket.emit('leave', {
 
 ## Order book
 
-### Definitions
-<ul>
-  <li><strong>Channel: </strong>use 'pair' from Markets details API response(Example: B-SNM_BTC,B-XRP_ETH, HB-SWM_BTC).</li>
-  <li><strong>Event: </strong>depth-update</li>
-</ul>
 
+### Parameters
+
+| Name        | Required | Example | Description                                                                             |
+|-------------|----------|---------|-----------------------------------------------------------------------------------------|
+| channelName | Yes      | BTCUSDT | use 'pair' from Markets details API response(Example: B-SNM_BTC,B-XRP_ETH, HB-SWM_BTC). |
 
 ### Response
-<ul>
-  <li>a stand for asks</li>
-  <li>b stand for bids</li>
-</ul>
+
+
+| Name | Type   | Description |
+|------|--------|-------------|
+| a    | string | asks.       |
+| b    | string | bids.       |
+
 
 ```python
 @sio.on('depth-update')
@@ -2189,21 +2202,24 @@ socket.on("depth-update", (response) => {
 
 ## Trades
 
-### Definitions
-<ul>
-  <li><strong>Channel: </strong>use 'pair' from Markets details API response(Example: B-SNM_BTC,B-XRP_ETH, HB-SWM_BTC). </li>
-  <li><strong>Event: </strong>new-trade</li>
-</ul>
 
+### Parameters
+
+| Name        | Required | Example   | Description                                                                             |
+|-------------|----------|-----------|-----------------------------------------------------------------------------------------|
+| channelName | Yes      | BTCUSDT   | use 'pair' from Markets details API response(Example: B-SNM_BTC,B-XRP_ETH, HB-SWM_BTC). |
+| eventName   | Yes      | new-trade | New trade event.                                                                        |
 
 ### Response
-<ul>
-  <li>m stands for whether the buyer is market maker or not</li>
-  <li>p is the trade price</li>
-  <li>q is the quantity</li>
-  <li>T is the timestamp of trade</li>
-  <li>s is the symbol(currency)</li>
-</ul>
+
+
+| Name | Type    | Description                               |
+|------|---------|-------------------------------------------|
+| m    | boolean | whether the buyer is market maker or not. |
+| p    | number  | trade price.                              |
+| q    | number  | quantity.                                 |
+| T    | number  | timestamp of trade.                       |
+| s    | string  | the symbol(currency).                     |
 
 ```python
 @sio.on('new-trade')
@@ -2229,18 +2245,9 @@ socket.on("new-trade", (response) => {
 }
 ```
 
-## ACCOUNT
+## Account
 
-<h3>To connect to the account socket</h3>
-
-Get your API key and Secret by simply following these steps:
-<ul>
-  <li>Go to the profile section on CoinDCX</li>
-  <li>Click on `Access API dashboard`</li>
-  <li>Click on `Create API key` and follow the process of verification</li>
-</ul>
-
-Refer to the right panel.
+Connect to the account websocket using the KEY and SECRET. If not generated yet, then please follow the steps in the 'General API information'.
 
 ```python
 
@@ -2313,19 +2320,22 @@ socket.emit('leave', {
 
 ## Balances
 
-### Definitions
-<ul>
-  <li><strong>Channel:</strong> coindcx</li>
-  <li><strong>Event:</strong> balance-update</li>
-</ul>
 
+### Parameters
+
+| Name        | Required | Example        | Description                                                                             |
+|-------------|----------|----------------|-----------------------------------------------------------------------------------------|
+| channelName | Yes      | BTCUSDT        | use 'pair' from Markets details API response(Example: B-SNM_BTC,B-XRP_ETH, HB-SWM_BTC). |
+| eventName   | Yes      | balance-update | Balance updates event.                                                                  |
 
 ### Response
-<ul>
-  <li>balance is the usable balance</li>
-  <li>Locked balance is the balance currently being used by an open order</li>
-  <li>currency is the currency like LTC, BTC etc.</li>
-</ul>
+
+
+| Name           | Type   | Description                                        |
+|----------------|--------|----------------------------------------------------|
+| balance        | string | the usable balance.                                |
+| locked_balance | string | the balance currently being used by an open order. |
+| currency       | string | the target currency like LTC, BTC etc.             |
 
 ```python
 @sio.on('balance-update')
@@ -2354,25 +2364,29 @@ socket.on("balance-update", (response) => {
 
 ## Trades
 
-### Definitions
-<ul>
-  <li><strong>Channel:</strong> coindcx</li>
-  <li><strong>Event:</strong> trade-update</li>
-</ul>
+### Parameters
+
+| Name        | Required | Example      | Description                                                                             |
+|-------------|----------|--------------|-----------------------------------------------------------------------------------------|
+| channelName | Yes      | BTCUSDT      | use 'pair' from Markets details API response(Example: B-SNM_BTC,B-XRP_ETH, HB-SWM_BTC). |
+| eventName   | Yes      | trade-update | trade updates event.                                                                    |
 
 ### Response
-<ul>
-  <li>o is client order id / system generated order id</li>
-  <li>t is trade id</li>
-  <li>s is symbol/market (LTCBTC)</li>
-  <li>p is price</li>
-  <li>q is quantity</li>
-  <li>T is timestamp</li>
-  <li>m stands for whether the buyer is market maker or not.</li>
-  <li>f is fee amount</li>
-  <li>e is exchange identifier</li>
-  <li>x is status</li>
-</ul>
+
+
+| Name | Type   | Description                                  |
+|------|--------|----------------------------------------------|
+| o    | string | client order id / system generated order id. |
+| t    | string | trade id.                                    |
+| s    | string | symbol/market (LTCBTC).                      |
+| p    | string | price.                                       |
+| q    | string | quantity.                                    |
+| T    | number | timestamp.                                   |
+| m    | string | whether the buyer is market maker or not.    |
+| f    | string | fee amount.                                  |
+| e    | string | exchange identifier.                         |
+| x    | string | status.                                      |
+
 
 ```python
 @sio.on('trade-update')
