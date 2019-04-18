@@ -2,7 +2,7 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
+  # - shell
   - ruby
   - python
   - javascript
@@ -19,22 +19,43 @@ search: true
 
 # Introduction
 
-Welcome to the CoinDCX API!
-<aside class="notice">The base URL for all the API calls is `https://api.coindcx.com` </aside>
+Welcome to the CoinDCX API. Here you'll find handy documentation about our REST and Websocket APIs.
 
-You can get your API key and Secret as follows
+Data resources can be accessed via standard HTTPS requests in UTF-8 format to a REST API or Websocket endpoint.
+
+
+# General API Information
+
+
+| Type          | Endpoint                 | Protocol  |
+|---------------|--------------------------|-----------|
+| REST API      | https://api.coindcx.com  | HTTPS     |
+| Websocket APi | wss://stream.coindcx.com | Websocket |
+
+
 <ul>
+<li>
+Connecting to private channels requires to provide KEY and SECRET which you can generate as follows:
+<ol>
   <li>Go to your CoinDCX profile section</li>
   <li>Click `Access API dashboard`</li>
   <li>Click Create API key button and follow the process of verifications</li>
+</ol>
+</li>
+<li>
+All time and timestamp related fields are in milliseconds.
+</li>
 </ul>
+
+
+<!-- <aside class="notice">The base URL for all the API calls is `https://api.coindcx.com` </aside> -->
 
 > The python version used for API samples is 2.7
 
-# Public endpoints
+# REST API - Public
 
 ## Ticker
-### HTTP Request
+<!-- ### HTTP Request -->
 `GET /exchange/ticker`
 
 ```javascript
@@ -72,21 +93,24 @@ print(data)
 ]
 ```
 
-### Definitions
+### Response
 
-<ul>
-  <li>bid - Highest bid offer in the orderbook</li>
-  <li>ask - Highest ask offer in the orderbook</li>
-  <li>high - 24 hour high</li>
-  <li>low - 24 hour low</li>
-  <li>timestamp - Time when this ticker was generated</li>
-</ul>
 
-<aside>A ticker is generated once every second</aside>
+| Name           | Type   | Description                             |
+|----------------|--------|-----------------------------------------|
+| market         | string | Market name                             |
+| change_24_hour | number | Change in market price in last 24 hours |
+| high           | string | Highest price offered in the orderbook  |
+| low            | string | Lowest price offered in the orderbook   |
+| last_price     | number | Highest ask offer in the orderbook      |
+| bid            | string | Highest bid offer in the orderbook      |
+| ask            | string | Highest ask offer in the orderbook      |
+| timestamp      | string | Timestamp if the ticker                 |
 
+<aside> Note: A ticker is generated once every second</aside>
 
 ## Markets
-### HTTP Request
+<!-- ### HTTP Request -->
 `GET /exchange/v1/markets`
 
 ```javascript
@@ -108,7 +132,7 @@ data = response.json()
 print(data)
 
 ```
-> Respose:
+> Response:
 
 ```json
 [
@@ -120,6 +144,7 @@ print(data)
 ]
 ```
 
+### Response
 Returns an array of strings of currently active markets.
 
 
