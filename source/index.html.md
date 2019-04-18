@@ -361,27 +361,6 @@ print(data)
 
 # REST API - Private
 
-<aside class="warning">All the Authenticated API calls use POST method. Parameters are to be passed as JSON in the request body. Every request must contain a timstamp parameter of when the request was generated.</aside>
-
-The authentication procedure is as follows:
-<ul>
-  <li>The payload is the parameters object, JSON encoded</li>
-`payload = parameters-object -> JSON encode`
-  <br><br>
-  <li>The signature is the hex digest of an HMAC-SHA256 hash where the message is your payload, and the secret key is your API secret.</li>
-`signature = HMAC-SHA256(payload, api-secret).digest('hex')`
-</ul>
-<br>
- <p>After this, You will have to add following headers into all the authenticated requests</p>
-
-| Header Name      | Value        |
-|------------------|--------------|
-| X-AUTH-APIKEY    | your-api-key |
-| X-AUTH-SIGNATURE | signature    |
-
-<aside class="notice">
-You must replace <code>your-api-key</code> and <code>signature</code> with your personal API key and generated signature respectively.
-</aside>
 
 > To authorize, use this code:
 
@@ -514,7 +493,41 @@ secret = "";
 	})
 ```
 
+
 > Make sure to replace API key and API secret with your own.
+
+<aside class="warning">All the Authenticated API calls use POST method. Parameters are to be passed as JSON in the request body. Every request must contain a timestamp parameter of when the request was generated.</aside>
+
+
+
+<ul>
+  <li>
+    Generate KEY and SECRET by following below mentioned authentication procedure.
+    <ol>
+      <li>Go to your CoinDCX profile section</li>
+      <li>Click Access API dashboard</li>
+      <li>Click Create API key button and follow the process of verifications</li>
+    </ol>
+  </li>
+  <li>Create payload object using the parameters and then encode it to JSON</li>
+  `payload = parameters-object -> JSON encode`
+    <br><br>
+  <li>Finally generate the signature, which is the hex digest of an HMAC-SHA256 hash.
+      Where the message is the payload, and the api-secret is your API secret.</li>
+      `signature = HMAC-SHA256(payload, api-secret).digest('hex')`
+</ul>
+<br>
+
+ <p>Now, add following headers into all the authentication requests</p>
+
+| Header Name      | Value        |
+|------------------|--------------|
+| X-AUTH-APIKEY    | your-api-key |
+| X-AUTH-SIGNATURE | signature    |
+
+<aside class="notice">Note:
+You must replace <code>your-api-key</code> and <code>signature</code> with your personal API key and generated signature respectively.
+</aside>
 
 # User
 
