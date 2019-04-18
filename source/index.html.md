@@ -229,7 +229,7 @@ print(data)
 | min_notional               | number | Minimum notional price.                                               |
 | base_currency_precision    | number | Decimal precision for the base currency.                              |
 | target_currency_precision  | number | Decimal precision for the target currency.                            |
-| step                       | number | step count.                                                           |
+| step                       | number | allowed multiple of quantity while placing order.                     |
 | order_types                | array  | Array of all the active order type.                                   |
 | symbol                     | string | Uniquely identifiable currency pair name.                             |
 | ecode                      | string | External exchange identifier. (ex: B for Binance)                     |
