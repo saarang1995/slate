@@ -105,16 +105,16 @@ print(data)
 ### Response
 
 
-| Name           | Type   | Description                             |
-|----------------|--------|-----------------------------------------|
-| market         | string | Market name                             |
-| change_24_hour | number | Change in market price in last 24 hours |
-| high           | string | Highest price offered in the orderbook  |
-| low            | string | Lowest price offered in the orderbook   |
-| last_price     | number | Highest ask offer in the orderbook      |
-| bid            | string | Highest bid offer in the orderbook      |
-| ask            | string | Highest ask offer in the orderbook      |
-| timestamp      | string | Timestamp if the ticker                 |
+| Name           | Type   | Description                               |
+|----------------|--------|-------------------------------------------|
+| market         | string | Uniquely identifiable currency pair name. |
+| change_24_hour | number | Change in market price in last 24 hours.  |
+| high           | string | Highest market price in last 24 hours.    |
+| low            | string | Lowest market price in last 24 hours.     |
+| last_price     | number | Latest market price.                      |
+| bid            | string | Highest bid offer in the orderbook.       |
+| ask            | string | Lowest ask offer in the orderbook.        |
+| timestamp      | string | Timestamp.                                |
 
 <aside> Note: A ticker response is generated every second.</aside>
 
@@ -215,28 +215,28 @@ print(data)
 ### Response
 
 
-| Name                       | Type   | Description                                                                |
-|----------------------------|--------|----------------------------------------------------------------------------|
-| coindcx_name               | string | Currency pair name.                                                        |
-| base_currency_short_name   | string | Base currency's short name.                                                |
-| target_currency_short_name | string | Target currency's short name.                                              |
-| target_currency_name       | string | Target currency's full name.                                               |
-| base_currency_name         | string | Base currency's full name.                                                 |
-| min_quantity               | number | Minimum quantity.                                                          |
-| max_quantity               | number | Maximum quantity.                                                          |
-| min_price                  | number | Minimum price.                                                             |
-| max_price                  | number | Maximum price.                                                             |
-| min_notional               | number | Minimum notional price.                                                    |
-| base_currency_precision    | number | Decimal precision for the base currency.                                   |
-| target_currency_precision  | number | Decimal precision for the target currency.                                 |
-| step                       | number | step count.                                                                |
-| order_types                | array  | Array of all the allowed order type.                                       |
-| symbol                     | string | Currency pair name.                                                        |
-| ecode                      | string | Exchange code from where the currency pair' data exists(ex: B for Binance) |
-| max_leverage               | number | Maximum laverage allowed on the currency pair.                             |
-| max_leverage_short         | number | Maximum laverage short allowed on the currency pair.                       |
-| pair                       | string | Pair name of currency pair for connecting to Websocket API.                |
-| status                     | string | Current status of Currency pair Wallet.                                    |
+| Name                       | Type   | Description                                                           |
+|----------------------------|--------|-----------------------------------------------------------------------|
+| coindcx_name               | string | Uniquely identifiable currency pair name.                             |
+| base_currency_short_name   | string | Base currency's short name.                                           |
+| target_currency_short_name | string | Target currency's short name.                                         |
+| target_currency_name       | string | Target currency's full name.                                          |
+| base_currency_name         | string | Base currency's full name.                                            |
+| min_quantity               | number | Minimum quantity.                                                     |
+| max_quantity               | number | Maximum quantity.                                                     |
+| min_price                  | number | Minimum price.                                                        |
+| max_price                  | number | Maximum price.                                                        |
+| min_notional               | number | Minimum notional price.                                               |
+| base_currency_precision    | number | Decimal precision for the base currency.                              |
+| target_currency_precision  | number | Decimal precision for the target currency.                            |
+| step                       | number | step count.                                                           |
+| order_types                | array  | Array of all the active order type.                                   |
+| symbol                     | string | Uniquely identifiable currency pair name.                             |
+| ecode                      | string | External exchange identifier. (ex: B for Binance)                     |
+| max_leverage               | number | Maximum leverage allowed for a long order.                            |
+| max_leverage_short         | number | Maximum leverage allowed for a short order.                           |
+| pair                       | string | Uniquely identifiable currency pair name including the exchange code. |
+| status                     | string | Current status.                                                       |
 
 ## Trades
 <!-- ### HTTP request -->
