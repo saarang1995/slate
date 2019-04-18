@@ -362,50 +362,48 @@ print(data)
 # REST API - Private
 
 
-> To authorize, use this code:
+<!-- > To authorize, use this code: -->
 
 ```ruby
-  require 'net/http'
-  require 'uri'
-  require 'json'
-  require 'openssl'
+require 'net/http'
+require 'uri'
+require 'json'
+require 'openssl'
+# Enter your API Key and Secret here. If you don't have one,
+# you can generate it from the website.
+key = ""  # API KEY
+secret = "" # API SECRET
+
+payload = {
+  "side" : "buy",
+  "order_type" : "limit_order",
+  "price_per_unit": 0.00001724,
+  "market" : "SNTBTC",
+  "total_quantity" : 100,
+  "timestamp": 1524211224
+}.to_json
+
+signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), secret, payload)
 
 
+headers = {
+  'Content-Type' => 'application/json',
+  'X-AUTH-APIKEY' => key, 
+  'X-AUTH-SIGNATURE' => signature
+}
 
-  secret = "Your secret key"
-  key = "Your API key"
+uri = URI.parse("https://api.coindcx.com/exchange/v1/orders/create")
 
+https = Net::HTTP.new(uri.host, uri.port)
+https.use_ssl = true
+request = Net::HTTP::Post.new(uri.path, headers)
 
-  payload = {
-    "side" : "buy",
-    "order_type" : "limit_order",
-    "price_per_unit": 0.00001724,
-    "market" : "SNTBTC",
-    "total_quantity" : 100,
-    "timestamp": 1524211224
-  }.to_json
+request.body = payload
 
-  signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), secret, payload)
-
-
-  headers = {
-    'Content-Type' => 'application/json',
-    'X-AUTH-APIKEY' => key, 
-    'X-AUTH-SIGNATURE' => signature
-  }
-
-  uri = URI.parse("https://api.coindcx.com/exchange/v1/orders/create")
-
-  https = Net::HTTP.new(uri.host, uri.port)
-  https.use_ssl = true
-  request = Net::HTTP::Post.new(uri.path, headers)
-
-  request.body = payload
-
-  response = https.request(request)
+response = https.request(request)
 ```
 
-> Sample order creation with auth
+<!-- > Sample order creation with auth -->
 
 ```python
 import hmac
@@ -415,9 +413,10 @@ import json
 import time
 import requests
 
-# Enter your API Key and Secret here. If you don't have one, you can generate it from the website.
-key = ""
-secret = ""
+# Enter your API Key and Secret here. If you don't have one,
+# you can generate it from the website.
+key = ""  # API KEY
+secret = "" # API SECRET
 
 # Generating a timestamp.
 timeStamp = int(round(time.time() * 1000))
@@ -461,40 +460,40 @@ var baseurl = "https://api.coindcx.com"
 
 var timeStamp = Math.floor(Date.now());
 
-// Place your API key and secret below. You can generate it from the website.
-key = "";
-secret = "";
+// Enter your API Key and Secret here. If you don't have one,
+// you can generate it from the website.
+key = ""  // API KEY
+secret = "" // API SECRET
 
+body = {
+  "side": "buy",	//Toggle between 'buy' or 'sell'.
+  "order_type": "limit_order", //Toggle between a 'market_order' or 'limit_order'.
+  "market": "SNTBTC", //Replace 'SNTBTC' with your desired market pair.
+  "price_per_unit": "0.03244", //This parameter is only required for a 'limit_order'
+  "total_quantity": 400, //Replace this with the quantity you want
+  "timestamp": timeStamp
+}
 
-	body = {
-		"side": "buy",	//Toggle between 'buy' or 'sell'.
-		"order_type": "limit_order", //Toggle between a 'market_order' or 'limit_order'.
-		"market": "SNTBTC", //Replace 'SNTBTC' with your desired market pair.
-		"price_per_unit": "0.03244", //This parameter is only required for a 'limit_order'
-		"total_quantity": 400, //Replace this with the quantity you want
-		"timestamp": timeStamp
-	}
+const payload = new Buffer(JSON.stringify(body)).toString();
+const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
 
-	const payload = new Buffer(JSON.stringify(body)).toString();
-	const signature = crypto.createHmac('sha256', secret).update(payload).digest('hex')
+const options = {
+  url: baseurl + "/exchange/v1/orders/create",
+  headers: {
+    'X-AUTH-APIKEY': key,
+    'X-AUTH-SIGNATURE': signature
+  },
+  json: true,
+  body: body
+}
 
-	const options = {
-		url: baseurl + "/exchange/v1/orders/create",
-		headers: {
-			'X-AUTH-APIKEY': key,
-			'X-AUTH-SIGNATURE': signature
-		},
-		json: true,
-		body: body
-	}
-
-	request.post(options, function(error, response, body) {
-		console.log(body);
-	})
+request.post(options, function(error, response, body) {
+  console.log(body);
+})
 ```
 
 
-> Make sure to replace API key and API secret with your own.
+<!-- > Make sure to replace API key and API secret with your own. -->
 
 <aside class="warning">All the Authenticated API calls use POST method. Parameters are to be passed as JSON in the request body. Every request must contain a timestamp parameter of when the request was generated.</aside>
 
