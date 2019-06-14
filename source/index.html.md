@@ -2096,7 +2096,7 @@ request.post(options, function(error, response, body) {
 <!-- ------------------- START Sockets ---------------------- -->
 
 # Sockets
-<!-- <aside class="notice">Sockets are currently available only for the INR market.</aside> -->
+<!-- <aside class="notice">Sockets are currently available only for the INR market.</aside> --> 
 Use websocket as transport.
 
 ## Public
