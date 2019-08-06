@@ -94,6 +94,7 @@ print(data)
     "change_24_hour": "-1.621",
     "high": "0.00002799",
     "low": "0.00002626",
+    "volume": "10.40",
     "last_price": "0.00002663",
     "bid": "0.00002663",
     "ask": "0.00002669",
@@ -111,6 +112,7 @@ print(data)
 | change_24_hour | number | Change in market price in last 24 hours.  |
 | high           | string | Highest market price in last 24 hours.    |
 | low            | string | Lowest market price in last 24 hours.     |
+| volume         | string | Volume of market in last 24 hours.        |
 | last_price     | number | Latest market price.                      |
 | bid            | string | Highest bid offer in the orderbook.       |
 | ask            | string | Lowest ask offer in the orderbook.        |
